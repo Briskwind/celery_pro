@@ -19,6 +19,6 @@ WANGQIAN_ACCESS_LOG_2_DAY = ''
 
 
 try:
-    from local_config import *
+    from local_settings import *
 except Exception:
     pass
