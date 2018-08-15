@@ -11,6 +11,11 @@ app.conf.update(
     enable_utc=True,
     beat_schedule={
 
+        "get_druglistrpc_out": {
+            "task": "celery_worker.get_druglistrpc_out",
+            "schedule": timedelta(minutes=20),
+        },
+
         "get_access_log": {
 
             "task": "celery_worker.get_access_log",
@@ -27,5 +32,6 @@ app.conf.update(
             "schedule": crontab(hour=1, minute=0),
 
         },
+
     }
 )
