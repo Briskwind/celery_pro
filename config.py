@@ -6,15 +6,11 @@ BROKER_URI = 'redis://%s:6379/11' % HOST_IP
 BACKEND_URI = 'redis://%s:6379/11' % HOST_IP
 
 
-# wq access log
-ACCESS_LOG_SAVE_PATH = ''
+# app log
+APP_LOG_SAVE_PATH = ''
 
 # nginx log
-WANGQIAN_ACCESS_LOG = ''
-
-# 2 days ago nginx log
-WANGQIAN_ACCESS_LOG_2_DAY = ''
-
+NGINX_LOG_PATH = ''
 
 
 

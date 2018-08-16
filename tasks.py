@@ -11,23 +11,28 @@ app.conf.update(
     enable_utc=True,
     beat_schedule={
 
-        "get_druglistrpc_out": {
+        "get_wq_celery_log": {
+            "task": "celery_worker.get_wq_celery_log",
+            "schedule": timedelta(seconds=70),
+        },
+
+        "get_wq_druglistrpc": {
             "task": "celery_worker.get_druglistrpc_out",
-            "schedule": timedelta(minutes=20),
+            "schedule": timedelta(seconds=56),
         },
 
-        "get_access_log": {
-
+        "get_wq_access_log": {
             "task": "celery_worker.get_access_log",
-            "schedule": timedelta(seconds=100),
-        },
-
-        "wangqian_access": {
-            "task": "celery_worker.get_wangqian_access",
             "schedule": timedelta(seconds=60),
+        },
+
+        "nginx_access": {
+            "task": "celery_worker.get_wangqian_access",
+            "schedule": timedelta(minutes=3),
 
         },
-        "two_days_ago": {
+
+        "nginx_two_days_ago": {
             "task": "celery_worker.nginx_log_2_day_ago",
             "schedule": crontab(hour=1, minute=0),
 
