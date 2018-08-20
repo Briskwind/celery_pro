@@ -1,8 +1,70 @@
 import datetime
 
-from config import APP_LOG_SAVE_PATH, NGINX_LOG_PATH
+from config import APP_LOG_SAVE_PATH, NGINX_LOG_PATH, DATABASE_BACKUP_PATH
 from tasks import app
 import os
+
+
+def format_time(unit):
+    """时间格式化，小于10的补0"""
+    if unit < 10:
+        res = '0{}'.format(unit)
+    else:
+        return str(unit)
+    return res
+
+
+def get_file_name(db_name):
+    """ 获取数据库备份名称"""
+
+    date = datetime.datetime.now()
+    month = format_time(date.month)
+    day = format_time(date.day)
+    hour = format_time(date.hour)
+    filename = '{db_name}_{month}{day}{hour}.sql.gz'.format(db_name=db_name, month=month, day=day, hour=hour)
+    return filename
+
+
+# todo 定时拉去数据库备份文件
+# 数据库定时备份(基础数据库[每周]、网签[每天]、药监单[每天]、医药新势力[每天])
+@app.task(max_retries=1)
+def get_wq_database():
+    """ 每天6:20拉取网签备份数据库"""
+
+    db_name = 'wangqian_xs'
+    filename = get_file_name(db_name)
+    command = 'scp ssh wq:/data/daily_backup/{0} {1}'.format(filename, DATABASE_BACKUP_PATH)
+    print('command', command)
+    # os.system(command)
+
+
+@app.task(max_retries=1)
+def get_invoices_database():
+    """ 每天6:40拉取药监单备份数据库"""
+    db_name = 'invoices'
+    filename = get_file_name(db_name)
+    command = 'scp ssh wq:/data/daily_backup/{0} {1}'.format(filename, DATABASE_BACKUP_PATH)
+    print('command', command)
+
+    # os.system(command)
+
+
+@app.task(max_retries=1)
+def get_djangodrug_db():
+    """ 周日 6:30 拉取基础数据库备份数据库"""
+
+    db_name = 'djangodrug'
+    filename = get_file_name(db_name)
+    command = 'scp ssh wq:/data/daily_backup/{0} {1}'.format(filename, DATABASE_BACKUP_PATH)
+    print('command', command)
+
+    # os.system(command)
+
+
+@app.task()
+def get_new_medicine_database():
+    """ 拉取医药新势力数据库"""
+    pass
 
 
 # nginx 日志的收集
@@ -39,6 +101,7 @@ def get_druglistrpc_out():
     command = 'scp ssh wq:/home/wangqian/.pm2/logs/druglistrpc-out-2.log {save_path}'.format(
         save_path=APP_LOG_SAVE_PATH)
     os.system(command)
+
 
 @app.task(max_retries=2)
 def get_wq_celery_log():

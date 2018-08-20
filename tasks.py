@@ -38,5 +38,27 @@ app.conf.update(
 
         },
 
+        # 数据库备份拉取
+        # wq
+        "get_wq_database": {
+            "task": "celery_worker.get_wq_database",
+            "schedule": crontab(hour=6, minute=20),
+
+        },
+        # 药监单
+        "get_invoices_database": {
+            "task": "celery_worker.get_invoices_database",
+            "schedule": crontab(hour=6, minute=40),
+
+        },
+        # 基础数据库
+        "get_djangodrug_db": {
+            "task": "celery_worker.get_djangodrug_db",
+            "schedule": crontab(hour=6, minute=30, day_of_week=0),
+
+        },
+
+
+
     }
 )
