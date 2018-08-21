@@ -34,8 +34,7 @@ def get_wq_database():
     db_name = 'wangqian_xs'
     filename = get_file_name(db_name)
     command = 'scp ssh wq:/data/daily_backup/{0} {1}'.format(filename, DATABASE_BACKUP_PATH)
-    print('command', command)
-    # os.system(command)
+    os.system(command)
 
 
 @app.task(max_retries=1)
@@ -44,9 +43,7 @@ def get_invoices_database():
     db_name = 'invoices'
     filename = get_file_name(db_name)
     command = 'scp ssh wq:/data/daily_backup/{0} {1}'.format(filename, DATABASE_BACKUP_PATH)
-    print('command', command)
-
-    # os.system(command)
+    os.system(command)
 
 
 @app.task(max_retries=1)
@@ -56,9 +53,7 @@ def get_djangodrug_db():
     db_name = 'djangodrug'
     filename = get_file_name(db_name)
     command = 'scp ssh wq:/data/daily_backup/{0} {1}'.format(filename, DATABASE_BACKUP_PATH)
-    print('command', command)
-
-    # os.system(command)
+    os.system(command)
 
 
 @app.task()
