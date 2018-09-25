@@ -10,7 +10,18 @@ app.conf.update(
     timezone='Asia/Shanghai',
     enable_utc=True,
     beat_schedule={
+        # 新势力日志相关
+        "get_xsl_nginx": {
+            "task": "celery_worker.get_xsl_nginx",
+            "schedule": timedelta(seconds=65),
+        },
+        "get_xsl_nginx_yesterday": {
+            "task": "celery_worker.get_xsl_nginx_yesterday",
+            "schedule": timedelta(seconds=66),
+        },
 
+
+        # 网签日志相关
         "get_wq_celery_log": {
             "task": "celery_worker.get_wq_celery_log",
             "schedule": timedelta(seconds=70),
@@ -57,8 +68,6 @@ app.conf.update(
             "schedule": crontab(hour=6, minute=30, day_of_week=0),
 
         },
-
-
 
     }
 )

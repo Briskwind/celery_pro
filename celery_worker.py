@@ -1,6 +1,6 @@
 import datetime
 
-from config import APP_LOG_SAVE_PATH, NGINX_LOG_PATH, DATABASE_BACKUP_PATH
+from config import APP_LOG_SAVE_PATH, NGINX_LOG_PATH, DATABASE_BACKUP_PATH, XSL_NGINX_PATH
 from tasks import app
 import os
 
@@ -25,8 +25,6 @@ def get_file_name(db_name):
     return filename
 
 
-# todo 定时拉去数据库备份文件
-# 数据库定时备份(基础数据库[每周]、网签[每天]、药监单[每天]、医药新势力[每天])
 @app.task(max_retries=1)
 def get_wq_database():
     """ 每天6:20拉取网签备份数据库"""
@@ -63,8 +61,32 @@ def get_new_medicine_database():
 
 
 # nginx 日志的收集
+
+
+
+@app.task(max_retries=2)
+def get_xsl_nginx():
+    """ 新势力nginx 日志收集"""
+    wangqian_access = 'kuaijie_access.log'
+    command = 'scp ssh sy:/data/logs/nginx/{0} {1}'.format(wangqian_access, XSL_NGINX_PATH)
+    os.system(command)
+
+
+@app.task(max_retries=2)
+def get_xsl_nginx_yesterday():
+    """ 新势力nginx 昨日日志收集"""
+    today = datetime.datetime.today()
+    two_days_ago = today - datetime.timedelta(1)
+    filename = 'kuaijie_access.log.{}'.format(two_days_ago.strftime('%Y-%m-%d'))
+    command = 'scp ssh sy:/data/logs/nginx/{0} {1}'.format(filename, XSL_NGINX_PATH)
+    print('command', command)
+    os.system(command)
+
+
+
 @app.task(max_retries=2)
 def get_wangqian_access():
+    """ 网签nginx 日志收集"""
     wangqian_access = 'wangqian_access.log'
     command2 = 'scp ssh wq:/data/logs/nginx/{0} {1}'.format(wangqian_access, NGINX_LOG_PATH)
     os.system(command2)
