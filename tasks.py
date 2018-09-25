@@ -17,7 +17,7 @@ app.conf.update(
         },
         "get_xsl_nginx_yesterday": {
             "task": "celery_worker.get_xsl_nginx_yesterday",
-            "schedule": timedelta(seconds=66),
+            "schedule": crontab(hour=1, minute=1),
         },
 
 
