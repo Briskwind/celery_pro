@@ -1,6 +1,6 @@
 import datetime
 
-from config import APP_LOG_SAVE_PATH, NGINX_LOG_PATH, DATABASE_BACKUP_PATH, XSL_NGINX_PATH
+from config import APP_LOG_SAVE_PATH, NGINX_LOG_PATH, DATABASE_BACKUP_PATH, XSL_NGINX_PATH, XSL_APP_LOG
 from tasks import app
 import os
 
@@ -63,7 +63,6 @@ def get_new_medicine_database():
 # nginx 日志的收集
 
 
-
 @app.task(max_retries=2)
 def get_xsl_nginx():
     """ 新势力nginx 日志收集"""
@@ -79,7 +78,6 @@ def get_xsl_nginx_yesterday():
     two_days_ago = today - datetime.timedelta(1)
     filename = 'kuaijie_access.log.{}'.format(two_days_ago.strftime('%Y-%m-%d'))
     command = 'scp ssh sy:/data/logs/nginx/{0} {1}'.format(filename, XSL_NGINX_PATH)
-    print('command', command)
     os.system(command)
 
 
@@ -126,3 +124,28 @@ def get_wq_celery_log():
     command = 'scp ssh wq:/data/logs/wangqian/wangqiancelery.err.log {save_path}'.format(
         save_path=APP_LOG_SAVE_PATH)
     os.system(command)
+
+@app.task(max_retries=2)
+def get_xsl_eyaos_stderr():
+    """ 新势力应用日志"""
+    command = 'scp ssh sy:/data/logs/supervisor/eyaos-stderr.log {save_path}'.format(
+        save_path=XSL_APP_LOG)
+    os.system(command)
+
+
+@app.task(max_retries=2)
+def get_xsl_access_log():
+    """ 新势力 access.log日志"""
+    command = 'scp ssh sy:/data/xsl/eyaos_web/web/logs/access.log {save_path}'.format(
+        save_path=XSL_APP_LOG)
+    os.system(command)
+
+
+@app.task(max_retries=2)
+def get_xsl_api_access_log():
+    """ 新势力 access.log日志"""
+    command = 'scp ssh sy:/data/xsl/eyaos_web/web/logs/api_access.log {save_path}'.format(
+        save_path=XSL_APP_LOG)
+    os.system(command)
+
+

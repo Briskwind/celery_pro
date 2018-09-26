@@ -10,6 +10,23 @@ app.conf.update(
     timezone='Asia/Shanghai',
     enable_utc=True,
     beat_schedule={
+
+        # 新势力应用日志
+        "get_xsl_api_access_log": {
+            "task": "celery_worker.get_xsl_api_access_log",
+            "schedule": timedelta(seconds=66),
+        },
+
+        "get_xsl_access_log": {
+            "task": "celery_worker.get_xsl_access_log",
+            "schedule": timedelta(seconds=75),
+        },
+
+        "get_xsl_eyaos_stderr": {
+            "task": "celery_worker.get_xsl_eyaos_stderr",
+            "schedule": timedelta(seconds=71),
+        },
+
         # 新势力日志相关
         "get_xsl_nginx": {
             "task": "celery_worker.get_xsl_nginx",
@@ -19,7 +36,6 @@ app.conf.update(
             "task": "celery_worker.get_xsl_nginx_yesterday",
             "schedule": crontab(hour=1, minute=1),
         },
-
 
         # 网签日志相关
         "get_wq_celery_log": {
