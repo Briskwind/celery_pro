@@ -12,6 +12,10 @@ NGINX_LOG_PATH = ''
 # 数据库备份路径
 DATABASE_BACKUP_PATH = ''
 
+# 新势力nginx 日志
+XSL_NGINX_PATH = ''
+
+XSL_APP_LOG = ''
 
 
 try:
