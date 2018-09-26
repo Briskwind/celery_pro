@@ -1,6 +1,6 @@
 import datetime
 
-from config import APP_LOG_SAVE_PATH, NGINX_LOG_PATH, DATABASE_BACKUP_PATH, XSL_NGINX_PATH, XSL_APP_LOG
+from config import APP_LOG_SAVE_PATH, NGINX_LOG_PATH, DATABASE_BACKUP_PATH, XSL_NGINX_PATH
 from tasks import app
 import os
 
@@ -129,7 +129,7 @@ def get_wq_celery_log():
 def get_xsl_eyaos_stderr():
     """ 新势力应用日志"""
     command = 'scp ssh sy:/data/logs/supervisor/eyaos-stderr.log {save_path}'.format(
-        save_path=XSL_APP_LOG)
+        save_path=APP_LOG_SAVE_PATH)
     os.system(command)
 
 
@@ -137,7 +137,7 @@ def get_xsl_eyaos_stderr():
 def get_xsl_access_log():
     """ 新势力 access.log日志"""
     command = 'scp ssh sy:/data/xsl/eyaos_web/web/logs/access.log {save_path}'.format(
-        save_path=XSL_APP_LOG)
+        save_path=APP_LOG_SAVE_PATH)
     os.system(command)
 
 
@@ -145,7 +145,7 @@ def get_xsl_access_log():
 def get_xsl_api_access_log():
     """ 新势力 access.log日志"""
     command = 'scp ssh sy:/data/xsl/eyaos_web/web/logs/api_access.log {save_path}'.format(
-        save_path=XSL_APP_LOG)
+        save_path=APP_LOG_SAVE_PATH)
     os.system(command)
 
 
