@@ -12,25 +12,25 @@ app.conf.update(
     beat_schedule={
 
         # 新势力应用日志
-        "get_xsl_api_access_log": {
-            "task": "celery_worker.get_xsl_api_access_log",
-            "schedule": timedelta(seconds=66),
-        },
+        # "get_xsl_api_access_log": {
+        #     "task": "celery_worker.get_xsl_api_access_log",
+        #     "schedule": timedelta(seconds=66),
+        # },
 
-        "get_xsl_access_log": {
-            "task": "celery_worker.get_xsl_access_log",
-            "schedule": timedelta(seconds=75),
-        },
+        # "get_xsl_access_log": {
+        #     "task": "celery_worker.get_xsl_access_log",
+        #     "schedule": timedelta(seconds=75),
+        # },
 
-        "get_xsl_eyaos_stderr": {
-            "task": "celery_worker.get_xsl_eyaos_stderr",
-            "schedule": timedelta(seconds=71),
-        },
+        # "get_xsl_eyaos_stderr": {
+        #     "task": "celery_worker.get_xsl_eyaos_stderr",
+        #     "schedule": timedelta(seconds=71),
+        # },
 
         # 新势力日志相关
         "get_xsl_nginx": {
             "task": "celery_worker.get_xsl_nginx",
-            "schedule": timedelta(seconds=65),
+            "schedule": timedelta(minutes=60),
         },
         "get_xsl_nginx_yesterday": {
             "task": "celery_worker.get_xsl_nginx_yesterday",
