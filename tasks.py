@@ -28,10 +28,10 @@ app.conf.update(
         # },
 
         # 新势力日志相关
-        "get_xsl_nginx": {
-            "task": "celery_worker.get_xsl_nginx",
-            "schedule": timedelta(minutes=60),
-        },
+        # "get_xsl_nginx": {
+        #     "task": "celery_worker.get_xsl_nginx",
+        #     "schedule": timedelta(minutes=60),
+        # },
         "get_xsl_nginx_yesterday": {
             "task": "celery_worker.get_xsl_nginx_yesterday",
             "schedule": crontab(hour=1, minute=1),
