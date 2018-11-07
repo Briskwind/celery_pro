@@ -40,22 +40,22 @@ app.conf.update(
         # 网签日志相关
         "get_wq_celery_log": {
             "task": "celery_worker.get_wq_celery_log",
-            "schedule": timedelta(seconds=70),
+            "schedule": timedelta(minutes=30),
         },
 
         "get_wq_druglistrpc": {
             "task": "celery_worker.get_druglistrpc_out",
-            "schedule": timedelta(seconds=56),
+            "schedule": timedelta(minutes=20),
         },
 
         "get_wq_access_log": {
             "task": "celery_worker.get_access_log",
-            "schedule": timedelta(seconds=60),
+            "schedule": timedelta(minutes=10),
         },
 
         "nginx_access": {
             "task": "celery_worker.get_wangqian_access",
-            "schedule": timedelta(minutes=3),
+            "schedule": timedelta(minutes=25),
 
         },
 
