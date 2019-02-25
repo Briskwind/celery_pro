@@ -1,6 +1,7 @@
 import datetime
 
 from config import APP_LOG_SAVE_PATH, NGINX_LOG_PATH, DATABASE_BACKUP_PATH, XSL_NGINX_PATH, XSL_APP_LOG
+from fabfile import sync_database
 from tasks import app
 import os
 
@@ -23,6 +24,21 @@ def get_file_name(db_name):
     hour = format_time(date.hour)
     filename = '{db_name}_{month}{day}{hour}.sql.gz'.format(db_name=db_name, month=month, day=day, hour=hour)
     return filename
+
+
+@app.task(max_retries=1)
+def send_wq_database_test():
+    """ 发送网签数据到测试服务器"""
+
+    db_name = 'wangqian_xs'
+    filename = get_file_name(db_name)
+    # command = 'scp /data/yumwei/daily_backup/{0} ssh new_wqtest:/data/yunwei/database_back'.format(filename)
+    command = 'scp /data/yumwei/daily_backup/vending_machine.sql ssh new_wqtest:/data/yunwei/database_back'
+    os.system(command)
+    # 执行数据同步命令
+    sync_database()
+
+
 
 
 @app.task(max_retries=1)
