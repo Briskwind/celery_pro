@@ -25,3 +25,6 @@ def sync_database():
 
     sync = 'mysql -h 172.16.91.197 -uroot -P3308 -p{0} -f wqxs_fortest <  {1}'.format(NEW_TEST_PASS, sql_file)
     run(sync)
+
+    rm_sql_file = '/data/yunwei/database_back/{0}'.format(sql_file)
+    run(rm_sql_file)
