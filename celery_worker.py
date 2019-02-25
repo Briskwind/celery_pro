@@ -1,29 +1,12 @@
 import datetime
 
+from commom import get_file_name
 from config import APP_LOG_SAVE_PATH, NGINX_LOG_PATH, DATABASE_BACKUP_PATH, XSL_NGINX_PATH, XSL_APP_LOG
 from fabfile import sync_database
 from tasks import app
 import os
 
 
-def format_time(unit):
-    """时间格式化，小于10的补0"""
-    if unit < 10:
-        res = '0{}'.format(unit)
-    else:
-        return str(unit)
-    return res
-
-
-def get_file_name(db_name):
-    """ 获取数据库备份名称"""
-
-    date = datetime.datetime.now()
-    month = format_time(date.month)
-    day = format_time(date.day)
-    hour = format_time(date.hour)
-    filename = '{db_name}_{month}{day}{hour}.sql.gz'.format(db_name=db_name, month=month, day=day, hour=hour)
-    return filename
 
 
 @app.task(max_retries=1)
