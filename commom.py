@@ -2,7 +2,6 @@ import datetime
 
 
 def format_time(unit):
-    """时间格式化，小于10的补0"""
     if unit < 10:
         res = '0{}'.format(unit)
     else:
