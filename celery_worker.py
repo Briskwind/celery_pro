@@ -18,7 +18,7 @@ def send_wq_database_test():
     command = 'scp /data/yumwei/daily_backup/{0} ssh new_wqtest:/data/yunwei/database_back'.format(filename)
     os.system(command)
     # 执行数据同步命令
-    sync_database = 'fab -f /data/yumwei/celery_pro/fabfile.py sync_database'
+    sync_database = '~/.pyenv/versions/yunwei/bin/fab -f /data/yumwei/celery_pro/fabfile.py sync_database'
     os.system(sync_database)
 
 
