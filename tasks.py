@@ -11,6 +11,12 @@ app.conf.update(
     enable_utc=True,
     beat_schedule={
 
+        "send_wq_database_test": {
+            "task": "celery_worker.send_wq_database_test",
+            "schedule": crontab(hour=15, minute=41),
+
+        },
+
         # 新势力应用日志
         # "get_xsl_api_access_log": {
         #     "task": "celery_worker.get_xsl_api_access_log",
@@ -82,14 +88,6 @@ app.conf.update(
         "get_djangodrug_db": {
             "task": "celery_worker.get_djangodrug_db",
             "schedule": crontab(hour=6, minute=30, day_of_week=0),
-
-        },
-
-
-        # 同步测试数据库
-        "send_wq_database_test": {
-            "task": "celery_worker.send_wq_database_test",
-            "schedule": crontab(hour=15, minute=25),
 
         },
 

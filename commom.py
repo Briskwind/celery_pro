@@ -10,7 +10,6 @@ def format_time(unit):
 
 
 def get_file_name(db_name):
-    """ 获取数据库备份名称"""
 
     date = datetime.datetime.now()
     month = format_time(date.month)
