@@ -89,7 +89,7 @@ app.conf.update(
         # 同步测试数据库
         "send_wq_database_test": {
             "task": "celery_worker.send_wq_database_test",
-            "schedule": crontab(hour=14, minute=35),
+            "schedule": crontab(hour=14, minute=43),
 
         },
 
